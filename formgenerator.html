@@ -15,18 +15,21 @@
 <h3>Generate a form using the fields below:</h3>
 
   <p>Press this button to add another field for the form:</p>
-  <button>Add a Field</button>
+  <button>Add New Field</button>
   <br>
   <br>
 
   <form action="#">
     <label for="label">Input Label:</label>
-      <input type="text" required autofocus=true>
+      <input type="text" required autofocus>
     <label for="type">Type:</label>
     <select name="type" id="type">
       <option value="text" selected>Text</option>
       <option value="multiline-text">Multiline-Text</option>
       <option value="date">Date</option>
+      <option value="email">Email</option>
+      <option value="password">Password</option>
+      <option value="username">Username</option>
     </select>
     <label for="required">Required Field?</label>
     <select name="required" id="required">
