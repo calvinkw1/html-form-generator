@@ -1,7 +1,9 @@
 $(document).ready(function() {
 
+  var counter = 1;
+  $("#new-field").click(function() {
     var html = '';
-    html += "<li>";
+    html += "<li id=" + counter + ">";
     html += "<label for='label'> Input Label: </label>";
     html += "<input type='text' required autofocus>";
     html += "<label for='type'> Type: </label>";
@@ -18,16 +20,30 @@ $(document).ready(function() {
     html += "<option value='yes'>Yes</option>";
     html += "<option value='no'>No</option>";
     html += "</select>";
+    // html += "<input type='button' class='remove' value='Remove'";
     html += "</li>";
-    
-  $("#new-field").click(function() {
     $("ul").append(html);
+    counter += 1;
+    // $('.remove').click(function() {
+    //   console.log(this);
+    // });
   });
 
+  
 
+  $("form").submit(function(e) {
+    e.preventDefault();
+    // generateTableData();
+    // generateSource();
+  });
 
+  function generateTableData() {
+    $("");
+  }
 
-
+  function generateSource() {
+    
+  }
 
 
 
