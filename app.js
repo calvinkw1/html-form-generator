@@ -55,9 +55,6 @@ $(document).ready(function() {
       typeVals.push($("#type-" + i).val());
       requiredVals.push($("#required-" + i).val());
     }
-    console.log(labelVals);
-    console.log(typeVals);
-    console.log(requiredVals);
     for (var j = 0; j < labelVals.length; j++) { // labelVals, typeVals, and requiredVals arrays will always be same length
       var html = "<tr>";
       html += "<td>" + labelVals[j] + "</td>";
@@ -69,13 +66,22 @@ $(document).ready(function() {
   }
 
   function generateSource() {
-    var html;
     for (var i = 0; i < labelVals.length; i++) {
       $("pre").append("    &lt;label for='" + labelVals[i].toLowerCase() + "'>" + labelVals[i] + ": &lt;label><br>");
-      if (requiredVals[i] === "yes") {
-        $("pre").append("    &lt;input type='" + typeVals[i] + "' id='" + labelVals[i].toLowerCase() + "' required><br>");
+      if (typeVals[i] === "multiline-text") {
+        var html = "    &lt;textarea name='" + labelVals[i].toLowerCase() + "' id='" + labelVals[i].toLowerCase() + "' cols='30' rows='10'";
+        console.log(html);
+        if (requiredVals[i] === "yes") {
+          $("pre").append(html + " required>&lt;/textarea><br>");
+        } else {
+          $("pre").append(html + ">&lt;/textarea></br>");
+        }
       } else {
-        $("pre").append("    &lt;input type='" + typeVals[i] + "'><br>");
+        if (requiredVals[i] === "yes") {
+          $("pre").append("    &lt;input type='" + typeVals[i] + "' id='" + labelVals[i].toLowerCase() + "' required><br>");
+        } else {
+          $("pre").append("    &lt;input type='" + typeVals[i] + "'><br>");
+        }
       }
     }
     $("pre").append("    &lt;input type='submit'><br>");
