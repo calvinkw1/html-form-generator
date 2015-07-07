@@ -33,7 +33,6 @@ $(document).ready(function() {
     //   console.log(this);
     // });
 
-
   });
 
   var labelVals = [],
@@ -44,9 +43,13 @@ $(document).ready(function() {
     // counter = 1; // reset counter in case generate button is clicked again
     $("tbody").empty(); // clear table's tbody in case generate button is clicked again
     generateTableData();
+    generateForm();
     generateSource();
-  });  
+  });
 
+  $("#view-source").click(function() {
+    $("#source-block").slideDown();
+  });
 
 
   function generateTableData() {
@@ -63,6 +66,32 @@ $(document).ready(function() {
       html += "</tr>";
       $("tbody").append(html);
     }
+    $("#data-table").show('slide');
+  }
+
+  function generateForm() {
+    var html = "";
+    for (var i = 0; i < labelVals.length; i++) {
+      html += "<form action='#'>";
+      html += "<label for='" + labelVals[i] + "'>" + labelVals[i] + ": </label>";
+      if (typeVals[i] === "multiline-text") {
+        html += "<textarea name='" + labelVals[i].toLowerCase() + "' id='" + labelVals[i].toLowerCase() + "' cols='30' rows='10'";
+        if (requiredVals[i] === "yes") {
+          html += "required></textarea><br>";
+        } else {
+          html += "></textarea><br>";
+        }
+      } else {
+        if (requiredVals[i] === "yes") {
+          html += "<input type='" + typeVals[i] + "' id='" + labelVals[i].toLowerCase() + "' required><br>";
+        } else {
+          html += "<input type='" + typeVals[i] + "'><br>";
+        }
+      }
+    }
+    html += "<input type='submit'></form>";
+    $("#generated-form").append(html);
+    $("#generated-form").show('slide');
   }
 
   function generateSource() {
