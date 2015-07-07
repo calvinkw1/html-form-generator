@@ -23,13 +23,13 @@
   <br>
 
   <div>
-    <form action="#">
+    <!-- <form action="#"> -->
       <ul>
         <li>
           <label for="label">Input Label:</label>
-            <input type="text" required autofocus>
+            <input type="text" class="labels" id="label-0" required autofocus>
           <label for="type">Type:</label>
-          <select name="type" id="type">
+          <select name="type" class="types" id="type-0">
             <option value="text" selected>Text</option>
             <option value="multiline-text">Multiline-Text</option>
             <option value="date">Date</option>
@@ -38,18 +38,30 @@
             <option value="username">Username</option>
           </select>
           <label for="required">Required Field?</label>
-          <select name="required" id="required">
+          <select name="required" class="required" id="required-0">
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </select>
         </li>
       </ul>
-      <input type="submit">
-    </form>
+      <button id="generate">Generate Code</button>
+      <!-- <input type="submit"> -->
+    <!-- </form> -->
   </div>
-
+  <br><br>
   <div>
     <!-- table of submitted data -->
+    <h4>Form Parameters</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Labels</th><th>Types</th><th>Required?</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
   </div>
 
   <div>
