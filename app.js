@@ -5,34 +5,48 @@ $(document).ready(function() {
       requiredIDs = [0];
 
   var counter = 1;
-  $("#new-field").click(function() {
-    var html = '';
-    labelIDs.push($(counter));
-    html += "<li>";
-    html += "<label for='label'> Input Label: </label>";
-    html += "<input type='text' class='labels' id='label-" + counter + "' required autofocus>";
-    html += "<label for='type'> Type: </label>";
-    html += "<select name='type' class='types' id='type-" + counter + "'>";
-    html += "<option value='text' selected>Text</option>";
-    html += "<option value='multiline-text'>Multiline-Text</option>";
-    html += "<option value='date'>Date</option>";
-    html += "<option value='email'>Email</option>";
-    html += "<option value='password'>Password</option>";
-    html += "<option value='username'>Username</option>";
-    html += "</select>";
-    html += "<label for='required'> Required Field? </label>";
-    html += "<select name='required' class='required' id='required-" + counter + "'>";
-    html += "<option value='yes'>Yes</option>";
-    html += "<option value='no'>No</option>";
-    html += "</select>";
-    // html += "<input type='button' class='remove' value='Remove'";
-    html += "</li>";
-    $("ul").append(html);
-    counter += 1;
-    // $('.remove').click(function() {
-    //   console.log(this);
-    // });
+  // $("#new-field").click(function() {
+  //   var html = '';
+  //   labelIDs.push(counter);
+  //   html += "<li>";
+  //   html += "<label for='label'> Input Label: </label>";
+  //   html += "<input type='text' class='labels' id='label-" + counter + "' required autofocus>";
+  //   html += "<label for='type'> Type: </label>";
+  //   html += "<select name='type' class='types' id='type-" + counter + "'>";
+  //   html += "<option value='text' selected>Text</option>";
+  //   html += "<option value='multiline-text'>Multiline-Text</option>";
+  //   html += "<option value='date'>Date</option>";
+  //   html += "<option value='email'>Email</option>";
+  //   html += "<option value='password'>Password</option>";
+  //   html += "<option value='username'>Username</option>";
+  //   html += "</select>";
+  //   html += "<label for='required'> Required Field? </label>";
+  //   html += "<select name='required' class='required' id='required-" + counter + "'>";
+  //   html += "<option value='yes'>Yes</option>";
+  //   html += "<option value='no'>No</option>";
+  //   html += "</select>";
+  //   // html += "<input type='button' class='remove' value='Remove'";
+  //   html += "</li>";
+  //   $("ul").append(html);
+  //   counter += 1;
+  //   // $('.remove').click(function() {
+  //   //   console.log(this);
+  //   // });
+  // });
 
+// ^^ above function is the same as below function, but refactored based on Martin's suggestion
+
+// clones the original input row and changes the id #s for each input before appending to the list element
+  $("#new-field").click(function() {
+    var newLabelID = "label-" + counter,
+        newTypeID = "type-" + counter,
+        newRequiredID = "required-" + counter,
+        $clonedElement = $("#orig-input").clone().removeAttr("id").addClass("cloned");
+        $clonedElement.find("#label-0").attr("id", newLabelID);
+        $clonedElement.find("#type-0").attr("id", newTypeID);
+        $clonedElement.find("#required-0").attr("id", newRequiredID);
+        $clonedElement.appendTo($("ul"));
+    counter += 1;
   });
 
   var labelVals = [],
