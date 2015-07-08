@@ -66,7 +66,7 @@ $(document).ready(function() {
   function firstInputSetAttrs() {
     var $firstInput = $("#first-input");
     $firstInput.find('label').attr('for', labelVals[0]);
-    $firstInput.find('label').text(labelVals[0]);
+    $firstInput.find('label').text(labelVals[0] + ": ");
     if (typeVals[0] === "multiline-text") {
       $firstInput.find('input').replaceWith("<textarea name='" + labelVals[0].toLowerCase() + "' id='" + labelVals[0].toLowerCase() + "' cols='30' rows='10'>");
       if (requiredVals[0] === "yes") {
@@ -108,6 +108,8 @@ $(document).ready(function() {
         });
         if (requiredVals[i] === "yes") {
           $clonedInput.find("input").prop("required", true);
+        } else {
+          $clonedInput.find("input").removeAttr("required");
         }
       }
     $clonedInput.appendTo($("#gen-form"));
@@ -117,7 +119,6 @@ $(document).ready(function() {
 // clones the generated form and then grabs the html of the form as a string and converts to array. Loops through and replaces < and > for <pre> formatting
   function generateSource() {
     var $clonedForm = $("#generated-form").clone().attr("id", "form-source").html();
-    console.log($clonedForm);
     var textArray = $clonedForm.split(''),
         modifiedString;
     for (var i = 0; i < textArray.length; i++) {
@@ -130,7 +131,6 @@ $(document).ready(function() {
       
     }
     modifiedString = textArray.join('');
-    console.log(modifiedString);
     $("code").append(modifiedString);
   }
 
