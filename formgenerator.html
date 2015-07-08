@@ -25,7 +25,7 @@
       <br>
 
       <div>
-        <form action="#" class="form-inline">
+        <form action="#" class="form-inline" id="form-generator">
           <ul>
             <li id="orig-input">
               <label for="label">Input Label:</label>
@@ -67,11 +67,11 @@
 
       <div id="generated-form">
         <h4>Your form</h4>
-        <form action="#">
-          <div id="first-input">
+        <form action="javascript:void(0)" id="gen-form">
+          <p id="first-input">
             <label for=""></label>
             <input type="">
-          </div>
+          </p>
         </form>
       </div>
       <br>
@@ -81,7 +81,9 @@
       <div id="source-block">
         <!-- Generated HTML form source should appear here -->
     <pre>
-      &ltform action='insert path to redirect to after submit or use '#' to prevent redirect or refresh'>
+      <code>
+        <!-- Generated form source code should appear here -->
+      </code>
     </pre>
       </div>
   </div>

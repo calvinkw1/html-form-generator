@@ -24,7 +24,7 @@ $(document).ready(function() {
     counter++;
   });
 
-  $("form").submit(function(e) {
+  $("#form-generator").submit(function(e) {
     e.preventDefault();
     // counter = 1; // reset counter in case generate button is clicked again
     $("tbody").empty(); // clear table's tbody in case generate button is clicked again
@@ -54,12 +54,15 @@ $(document).ready(function() {
     $("#data-table").show('slide');
   }
 
+// main generate form function
   function generateForm() {
     firstInputSetAttrs();
     clonedInputSetAttrs();
+    $("#gen-form").append("<input type='submit'>");
     $("#generated-form").show('slide');
   }
 
+// sets attrributes for first input as the form html, minus attr's, already exists in the html file
   function firstInputSetAttrs() {
     var $firstInput = $("#first-input");
     $firstInput.find('label').attr('for', labelVals[0]);
@@ -84,9 +87,10 @@ $(document).ready(function() {
         });
       }
     }
-    $firstInput.appendTo($("#generated-form"));
+    $firstInput.appendTo($("#gen-form"));
   }
 
+// clones the first input and sets attr's for the cloned inputs before appending to form
   function clonedInputSetAttrs() {
     for (var i = 1; i < labelVals.length; i++) {
       var $clonedInput = $("#first-input").clone().removeAttr("id").addClass("cloned-input");
@@ -106,55 +110,28 @@ $(document).ready(function() {
           $clonedInput.find("input").prop("required", true);
         }
       }
-    $clonedInput.appendTo($("#generated-form"));
+    $clonedInput.appendTo($("#gen-form"));
     }
   }
 
-  function genForm() {
-    var html = "";
-    for (var i = 0; i < labelVals.length; i++) {
-      html += "<form action='#'>";
-      html += "<label for='" + labelVals[i] + "'>" + labelVals[i] + ": </label>";
-      if (typeVals[i] === "multiline-text") {
-        html += "<textarea name='" + labelVals[i].toLowerCase() + "' id='" + labelVals[i].toLowerCase() + "' cols='30' rows='10'";
-        if (requiredVals[i] === "yes") {
-          html += "required></textarea><br>";
-        } else {
-          html += "></textarea><br>";
-        }
-      } else {
-        if (requiredVals[i] === "yes") {
-          html += "<input type='" + typeVals[i] + "' id='" + labelVals[i].toLowerCase() + "' required><br>";
-        } else {
-          html += "<input type='" + typeVals[i] + "'><br>";
-        }
-      }
-    }
-    html += "<input type='submit'></form>";
-    $("#generated-form").append(html);
-    $("#generated-form").show('slide');
-  }
-
+// clones the generated form and then grabs the html of the form as a string and converts to array. Loops through and replaces < and > for <pre> formatting
   function generateSource() {
-    for (var i = 0; i < labelVals.length; i++) {
-      $("pre").append("    &lt;label for='" + labelVals[i].toLowerCase() + "'>" + labelVals[i] + ": &lt;label><br>");
-      if (typeVals[i] === "multiline-text") {
-        var html = "    &lt;textarea name='" + labelVals[i].toLowerCase() + "' id='" + labelVals[i].toLowerCase() + "' cols='30' rows='10'";
-        if (requiredVals[i] === "yes") {
-          $("pre").append(html + " required>&lt;/textarea><br>");
-        } else {
-          $("pre").append(html + ">&lt;/textarea></br>");
-        }
-      } else {
-        if (requiredVals[i] === "yes") {
-          $("pre").append("    &lt;input type='" + typeVals[i] + "' id='" + labelVals[i].toLowerCase() + "' required><br>");
-        } else {
-          $("pre").append("    &lt;input type='" + typeVals[i] + "'><br>");
-        }
+    var $clonedForm = $("#generated-form").clone().attr("id", "form-source").html();
+    console.log($clonedForm);
+    var textArray = $clonedForm.split(''),
+        modifiedString;
+    for (var i = 0; i < textArray.length; i++) {
+      if (textArray[i] === "<") {
+        textArray[i] = "&lt;";
       }
+      if (textArray[i] === ">") {
+        textArray[i] = "&gt;";
+      }
+      
     }
-    $("pre").append("    &lt;input type='submit'><br>");
-    $("pre").append("  &lt;/form>");
+    modifiedString = textArray.join('');
+    console.log(modifiedString);
+    $("code").append(modifiedString);
   }
 
 });
