@@ -6,7 +6,11 @@ $(document).ready(function() {
       counter = 1,
       labelVals = [],
       typeVals = [],
-      requiredVals = [];
+      requiredVals = [],
+      $body = $("body").clone(),
+      $dataTable = $("#data-table").clone(),
+      $generatedForm = $("#generated-form").clone(),
+      $sourceBlock = $("#source-block").clone();
 
 // clones the original input row and changes the id #s for each input before appending to the list element
   $("#new-field").click(function() {
@@ -24,19 +28,40 @@ $(document).ready(function() {
     counter++;
   });
 
+// main generator function on submit that calls the other functions to do the heavy lifting
   $("#form-generator").submit(function(e) {
     e.preventDefault();
-    // counter = 1; // reset counter in case generate button is clicked again
-    $("tbody").empty(); // clear table's tbody in case generate button is clicked again
+    counter = 1;
+    console.log($dataTable.html());
+    console.log($generatedForm.html());
+    console.log($sourceBlock.html());
+    $("#data-table").replaceWith($dataTable);
+    $("#generated-form").replaceWith($generatedForm);
+    $("#source-block").replaceWith($sourceBlock);
     generateTableData();
     generateForm();
     generateSource();
   });
 
-  $("#view-source").click(function() {
-    $("#source-block").slideDown();
+  $("#reset").click(function () {
+    counter = 1; // reset counter in case generate button is clicked again
+    $("body").replaceWith($body);
   });
 
+var sourceShow = false;
+  $("#view-source").click(function() {
+    if (sourceShow === false) {
+      $("#source-block").slideDown();
+      sourceShow = true;
+    }
+    else {
+      $("#source-block").slideUp();
+      sourceShow = false;
+    }
+    console.log(sourceShow);
+  });
+
+// pushes labelVals, typeVals, and requiredVals into respective arrays, then iterates over one of the arrays to fill data into the table
   function generateTableData() {
     for (var i = 0; i < labelIDs.length; i++) { // labelIDs, typeIDs, and requiredIDs arrays will always be same length
       labelVals.push($("#label-" + i).val());

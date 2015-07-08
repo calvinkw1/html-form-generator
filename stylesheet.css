@@ -1,3 +1,7 @@
 #data-table, #generated-form, #source-block {
   display: none;
 }
+
+input {
+  border-radius: 20px;
+}
