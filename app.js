@@ -118,6 +118,7 @@ $(document).ready(function() {
     clonedInputSetAttrs();
     $("#gen-form").append("<input type='submit'>");
     $("#generated-form").show('slide');
+    $("#view-source").show('slide');
   }
 
 // sets attrributes for first input as the form html, minus attr's, already exists in the html file
