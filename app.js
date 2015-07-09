@@ -1,34 +1,31 @@
 $(document).ready(function() {
 
-  var labelIDs = [0],
-      typeIDs = [0],
-      requiredIDs = [0],
-      counter = 1,
-      labelVals = [],
-      typeVals = [],
-      requiredVals = [],
+  var counter = 1,
       $body = $("body").clone(),
       $dataTable = $("#data-table").clone(),
       $generatedForm = $("#generated-form").clone(),
       $sourceBlock = $("#source-block").clone();
 
-// clones the original input row and changes the id #s for each input before appending to the list element
-  $("#new-field").click(function() {
-    var newLabelID = "label-" + counter,
-        newTypeID = "type-" + counter,
-        newRequiredID = "required-" + counter,
-        $clonedField = $("#orig-input").clone().removeAttr("id").addClass("cloned");
-        $clonedField.find("#label-0").attr("id", newLabelID);
-        $clonedField.find("#type-0").attr("id", newTypeID);
-        $clonedField.find("#required-0").attr("id", newRequiredID);
-        $clonedField.appendTo($("ul"));
-    labelIDs.push(newLabelID);
-    typeIDs.push(newTypeID);
-    requiredIDs.push(newRequiredID);
-    counter++;
+  var fields = [];
+
+  fields.push({
+    $element: $("#orig-input"),
+      label: {
+        id: "label-0",
+        value: null
+      },
+      type: {
+        id: "type-0",
+        value: null
+      },
+      required: {
+        id: "required-0",
+        value: false
+      }
   });
 
-// main generator function on submit that calls the other functions to do the heavy lifting
+// ***** START BUTTONS *****
+  // main generator function on submit that calls the other functions to do the heavy lifting
   $("#form-generator").submit(function(e) {
     e.preventDefault();
     counter = 1;
@@ -43,12 +40,14 @@ $(document).ready(function() {
     generateSource();
   });
 
+  // reset button
   $("#reset").click(function () {
-    counter = 1; // reset counter in case generate button is clicked again
+    counter = 1;
     $("body").replaceWith($body);
   });
 
-var sourceShow = false;
+  // view source button
+  var sourceShow = false;
   $("#view-source").click(function() {
     if (sourceShow === false) {
       $("#source-block").slideDown();
@@ -58,21 +57,49 @@ var sourceShow = false;
       $("#source-block").slideUp();
       sourceShow = false;
     }
-    console.log(sourceShow);
+  });
+// ***** END BUTTONS *****
+
+// clones the original input row and changes the id #s for each input before appending to the list element, pushing IDs into the field object
+  $("#new-field").click(function() {
+    var newLabelID = "label-" + counter,
+        newTypeID = "type-" + counter,
+        newRequiredID = "required-" + counter,
+        $clonedField = $("#orig-input").clone().removeAttr("id").addClass("cloned");
+    $clonedField.find("#label-0").attr("id", newLabelID);
+    $clonedField.find("#type-0").attr("id", newTypeID);
+    $clonedField.find("#required-0").attr("id", newRequiredID);
+    fields.push({
+      $element: $clonedField,
+      label: {
+        id: newLabelID,
+        value: null
+      },
+      type: {
+        id: newTypeID,
+        value: null
+      },
+      required: {
+        id: newRequiredID,
+        value: false
+      }
+    });
+    $clonedField.appendTo($("ul"));
+    counter++;
   });
 
 // pushes labelVals, typeVals, and requiredVals into respective arrays, then iterates over one of the arrays to fill data into the table
   function generateTableData() {
-    for (var i = 0; i < labelIDs.length; i++) { // labelIDs, typeIDs, and requiredIDs arrays will always be same length
-      labelVals.push($("#label-" + i).val());
-      typeVals.push($("#type-" + i).val());
-      requiredVals.push($("#required-" + i).val());
+    for (var i = 0; i < fields.length; i++) { // labelIDs, typeIDs, and requiredIDs arrays will always be same length
+      fields[i].label.value = $("#label-" + i).val();
+      fields[i].type.value = $("#type-" + i).val();
+      fields[i].required.value = $("#required-" + i).val();
     }
-    for (var j = 0; j < labelVals.length; j++) { // labelVals, typeVals, and requiredVals arrays will always be same length
+    for (var j = 0; j < fields.length; j++) {
       var html = "<tr>";
-      html += "<td>" + labelVals[j] + "</td>";
-      html += "<td>" + typeVals[j] + "</td>";
-      html += "<td>" + requiredVals[j] + "</td>";
+      html += "<td>" + fields[j].label.value + "</td>";
+      html += "<td>" + fields[j].type.value + "</td>";
+      html += "<td>" + fields[j].required.value + "</td>";
       html += "</tr>";
       $("tbody").append(html);
     }
@@ -90,25 +117,25 @@ var sourceShow = false;
 // sets attrributes for first input as the form html, minus attr's, already exists in the html file
   function firstInputSetAttrs() {
     var $firstInput = $("#first-input");
-    $firstInput.find('label').attr('for', labelVals[0]);
-    $firstInput.find('label').text(labelVals[0] + ": ");
-    if (typeVals[0] === "multiline-text") {
-      $firstInput.find('input').replaceWith("<textarea name='" + labelVals[0].toLowerCase() + "' id='" + labelVals[0].toLowerCase() + "' cols='30' rows='10'>");
-      if (requiredVals[0] === "yes") {
+    $firstInput.find('label').attr('for', fields[0].label.value.toLowerCase());
+    $firstInput.find('label').text(fields[0].label.value + ": ");
+    if (fields[0].type.value === "multiline-text") {
+      $firstInput.find('input').replaceWith("<textarea name='" + fields[0].type.value.toLowerCase() + "' id='" + fields[0].type.value.toLowerCase() + "' cols='30' rows='10'>");
+      if (fields[0].required.value === "yes") {
         $firstInput.find("textarea").prop("required", true);
       }
     } else {
-      if (requiredVals[0] === "yes") {
+      if (fields[0].required.value === "yes") {
         $firstInput.find('input').prop({
-          type: typeVals[0],
-          id: labelVals[0],
-          required: true
+          type: fields[0].type.value,
+          id: fields[0].label.value,
+          required: fields[0].required.value
         });
       }
       else {
         $firstInput.find('input').attr({
-          type: typeVals[0],
-          id: labelVals[0]
+          type: fields[0].type.value,
+          id: fields[0].label.value,
         });
       }
     }
@@ -117,21 +144,21 @@ var sourceShow = false;
 
 // clones the first input and sets attr's for the cloned inputs before appending to form
   function clonedInputSetAttrs() {
-    for (var i = 1; i < labelVals.length; i++) {
+    for (var i = 1; i < fields.length; i++) {
       var $clonedInput = $("#first-input").clone().removeAttr("id").addClass("cloned-input");
-      $clonedInput.find("label").attr("for", labelVals[i]);
-      $clonedInput.find("label").text(labelVals[i]);
-      if (typeVals[i] === "multiline-text") {
-        $clonedInput.find('input').replaceWith("<textarea name='" + labelVals[i].toLowerCase() + "' id='" + labelVals[i].toLowerCase() + "' cols='30' rows='10'>");
-        if (requiredVals[i] === "yes") {
+      $clonedInput.find("label").attr("for", fields[i].label.value);
+      $clonedInput.find("label").text(fields[i].label.value + ": ");
+      if (fields[i].type.value === "multiline-text") {
+        $clonedInput.find('input').replaceWith("<textarea name='" + fields[i].type.value.toLowerCase() + "' id='" + fields[i].type.value.toLowerCase() + "' cols='30' rows='10'>");
+        if (fields[0].required.value === "yes") {
           $clonedInput.find("textarea").prop("required", true);
         }
       } else {
         $clonedInput.find('input').attr({
-          type: typeVals[i],
-          id: labelVals[i]
+          type: fields[i].type.value,
+          id: fields[i].label.value
         });
-        if (requiredVals[i] === "yes") {
+        if (fields[0].required.value === "yes") {
           $clonedInput.find("input").prop("required", true);
         } else {
           $clonedInput.find("input").removeAttr("required");

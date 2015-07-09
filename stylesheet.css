@@ -1,7 +1,10 @@
 #data-table, #generated-form, #source-block {
   display: none;
+
 }
 
-input {
+input, textarea {
   border-radius: 20px;
 }
+
+
