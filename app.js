@@ -32,9 +32,6 @@ $(document).ready(function() {
     console.log($dataTable.html());
     console.log($generatedForm.html());
     console.log($sourceBlock.html());
-    $("#data-table").replaceWith($dataTable);
-    $("#generated-form").replaceWith($generatedForm);
-    $("#source-block").replaceWith($sourceBlock);
     generateTableData();
     generateForm();
     generateSource();
