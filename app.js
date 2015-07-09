@@ -1,14 +1,12 @@
 $(document).ready(function() {
 
   var counter = 1,
-      $body = $("body").clone(),
-      $dataTable = $("#data-table").clone(),
-      $generatedForm = $("#generated-form").clone(),
-      $sourceBlock = $("#source-block").clone();
+      $body = $("body").clone();
 
   var fields = [];
 
-  fields.push({
+  function initOrigField() {
+    fields.push({
     $element: $("#orig-input"),
       label: {
         id: "label-0",
@@ -22,16 +20,14 @@ $(document).ready(function() {
         id: "required-0",
         value: false
       }
-  });
+    });
+  }
 
 // ***** START BUTTONS *****
   // main generator function on submit that calls the other functions to do the heavy lifting
   $("#form-generator").submit(function(e) {
     e.preventDefault();
     counter = 1;
-    console.log($dataTable.html());
-    console.log($generatedForm.html());
-    console.log($sourceBlock.html());
     generateTableData();
     generateForm();
     generateSource();
@@ -40,7 +36,11 @@ $(document).ready(function() {
   // reset button
   $("#reset").click(function () {
     counter = 1;
-    $("body").replaceWith($body);
+    $("body").replaceWith($body); // this seems to be causing all functions attached to the original DOM to break or not be brought over to new body
+    // $("body").before($body).detach;  this was supposed to detach original body from events
+    fields = [];
+    initOrigField();
+    console.log(fields);
   });
 
   // view source button
