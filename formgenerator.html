@@ -19,76 +19,80 @@
   <div class="container">
     <h3>Generate a form using the fields below:</h3>
 
-      <p>Press this button to add another field for the form:</p>
-      <button id="new-field" class="btn btn-primary">Add New Field</button>
+    <p>Press this button to add another field for the form:</p>
+    <button id="new-field" class="btn btn-primary">Add New Field</button>
 
-      <br>
-      <br>
+    <br>
+    <br>
 
-      <div>
-        <form action="#" class="form-inline" id="form-generator">
-          <ul>
-            <li id="orig-input">
-              <label for="label">Input Label:</label>
-                <input type="text" class="labels" id="label-0" required autofocus>
-              <label for="type">Type:</label>
-              <select name="type" class="types" id="type-0">
-                <option value="text" selected>Text</option>
-                <option value="multiline-text">Multiline-Text</option>
-                <option value="date">Date</option>
-                <option value="email">Email</option>
-                <option value="password">Password</option>
-                <option value="username">Username</option>
-              </select>
-              <label for="required">Required Field?</label>
-              <select name="required" class="required" id="required-0">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </li>
-          </ul>
-          <input type='submit' id="generate" class="btn btn-success" value="Generate Code">
-        </form>
-        <br>
-        <button id="reset" class="btn btn-warning">Reset All</button>
-      </div>
-      <br><br>
-      <div id="data-table">
-        <!-- table of submitted data -->
-        <h4>Form Parameters</h4>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Labels</th><th>Types</th><th>Required?</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-          </tbody>
-        </table>
-      </div>
-
-      <div id="generated-form">
-        <h4>Your form</h4>
-        <form action="javascript:void(0)" id="gen-form">
-          <p id="first-input">
-            <label for=""></label>
-            <input type="">
-          </p>
-        </form>
-      </div>
+    <div>
+      <form action="#" class="form-inline" id="form-generator">
+        <ul>
+          <li id="orig-input">
+            <label for="label">Input Label:</label>
+              <input type="text" class="labels" id="label-0" required autofocus>
+            <label for="type">Type:</label>
+            <select name="type" class="types" id="type-0">
+              <option value="text" selected>Text</option>
+              <option value="multiline-text">Multiline-Text</option>
+              <option value="date">Date</option>
+              <option value="email">Email</option>
+              <option value="password">Password</option>
+              <option value="username">Username</option>
+            </select>
+            <label for="required">Required Field?</label>
+            <select name="required" class="required" id="required-0">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </li>
+        </ul>
+        <input type='submit' id="generate" class="btn btn-success" value="Generate Code">
+      </form>
       <br>
-      <br>
+      <button id="reset" class="btn btn-warning">Reset All</button>
+    </div>
 
-      <button type="button" class="btn btn-primary" id="view-source">View Source</button>
-      <div id="source-block">
-        <!-- Generated HTML form source should appear here -->
-    <pre>
-      <code>
-        <!-- Generated form source code should appear here -->
-      </code>
-    </pre>
-      </div>
+    <br>
+    <br>
+    
+    <div id="data-table">
+      <!-- table of submitted data -->
+      <h4>Form Parameters</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Labels</th><th>Types</th><th>Required?</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+    </div>
+
+    <div id="generated-form">
+      <h4>Your form</h4>
+      <form action="javascript:void(0)" id="gen-form">
+        <p id="first-input">
+          <label for=""></label>
+          <input type="">
+        </p>
+      </form>
+    </div>
+    <br>
+    <br>
+
+    <button type="button" class="btn btn-primary" id="view-source">View Source</button>
+    
+    <div id="source-block">
+      <!-- Generated HTML form source should appear here -->
+      <pre>
+        <code>
+          <!-- Generated form source code should appear here -->
+        </code>
+      </pre>
+    </div>
   </div>
 </body>
 </html>

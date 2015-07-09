@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
   var counter = 1,
-      $body = $("body").clone();
+      $origInput = $("#orig-input").clone(),
+      $firstInput = $("#first-input").clone();
 
   var fields = [];
 
@@ -23,6 +24,8 @@ $(document).ready(function() {
     });
   }
 
+  initOrigField();
+
 // ***** START BUTTONS *****
   // main generator function on submit that calls the other functions to do the heavy lifting
   $("#form-generator").submit(function(e) {
@@ -33,11 +36,16 @@ $(document).ready(function() {
     generateSource();
   });
 
-  // reset button
+  // reset button - had to ditch using replaceWith() for body el, as it was removing event listeners
   $("#reset").click(function () {
     counter = 1;
-    $("body").replaceWith($body); // this seems to be causing all functions attached to the original DOM to break or not be brought over to new body
-    // $("body").before($body).detach;  this was supposed to detach original body from events
+    $("ul").empty().append($origInput);
+    $("#gen-form").empty().append($firstInput);
+    $("tbody").empty();
+    $("code").empty();
+    $("#data-table").hide('slide');
+    $("#generated-form").hide('slide');
+    $("#source-block").hide('slide');
     fields = [];
     initOrigField();
     console.log(fields);
@@ -87,6 +95,7 @@ $(document).ready(function() {
 
 // pushes labelVals, typeVals, and requiredVals into respective arrays, then iterates over one of the arrays to fill data into the table
   function generateTableData() {
+    console.log(fields);
     for (var i = 0; i < fields.length; i++) { // labelIDs, typeIDs, and requiredIDs arrays will always be same length
       fields[i].label.value = $("#label-" + i).val();
       fields[i].type.value = $("#type-" + i).val();
