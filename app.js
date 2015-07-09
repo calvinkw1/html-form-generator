@@ -34,6 +34,7 @@ $(document).ready(function() {
     generateTableData();
     generateForm();
     generateSource();
+    $("#view-source").show('slide');
   });
 
   // reset button - had to ditch using replaceWith() for body el, as it was removing event listeners
@@ -45,6 +46,7 @@ $(document).ready(function() {
     $("code").empty();
     $("#data-table").hide('slide');
     $("#generated-form").hide('slide');
+    $("#view-source").hide('slide');
     $("#source-block").hide('slide');
     fields = [];
     initOrigField();
@@ -118,7 +120,6 @@ $(document).ready(function() {
     clonedInputSetAttrs();
     $("#gen-form").append("<input type='submit'>");
     $("#generated-form").show('slide');
-    $("#view-source").show('slide');
   }
 
 // sets attrributes for first input as the form html, minus attr's, already exists in the html file
